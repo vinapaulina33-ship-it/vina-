@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Momo si Monster Bulu — Pesan Spesial Untukmu</title>
+  <meta name="description" content="Ada titipan pesan lucu dari Momo si Monster Bulu untukmu! Klik untuk membuka dan membalas pesannya." />
+  <meta property="og:title" content="Momo si Monster Bulu 💌" />
+  <meta property="og:description" content="Seseorang menitipkan pesan spesial lewat Momo untukmu. Buka sekarang!" />
+  <meta property="og:type" content="website" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top, #fff0f6 0%, #ffe3ec 55%, #f8edeb 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px 14px;
+      color: #4a3b42;
+      overflow-x: hidden;
+    }
+
+    .app-wrapper {
+      width: 100%;
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      z-index: 2;
+    }
+
+    .header {
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      color: #ff5d8f;
+      text-shadow: 2px 2px 0px #ffffff;
+    }
+
+    p.subtitle {
+      font-size: 0.92rem;
+      color: #7a5c68;
+      margin-top: 4px;
+    }
+
+    /* Kartu Pesan & Pembuat Link */
+    .message-card {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border: 2px solid #ffc2d1;
+      border-radius: 22px;
+      padding: 15px 18px;
+      box-shadow: 0 8px 24px rgba(255, 107, 157, 0.14);
+      transition: all 0.25s ease;
+    }
+
+    .message-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .recipient-badge {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #e05778;
+      background: #fff0f5;
+      padding: 5px 12px;
+      border-radius: 999px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-pill {
+      border: none;
+      background: #ff6b9d;
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+
+    .btn-pill:hover {
+      background: #f05287;
+      transform: translateY(-1px);
+    }
+
+    .btn-pill.secondary {
+      background: #ffe5ec;
+      color: #d6336c;
+    }
+
+    .btn-pill.secondary:hover {
+      background: #ffd6e0;
+    }
+
+    .message-body {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed #ffd6e0;
+      user-select: text;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .message-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #3d2c2e;
+      margin-bottom: 6px;
+    }
+
+    .message-text {
+      font-size: 0.94rem;
+      line-height: 1.55;
+      color: #5a464e;
+      white-space: pre-line;
+    }
+
+    .message-footer {
+      margin-top: 10px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: #ff5d8f;
+      text-align: right;
+    }
+
+    /* Form Pembuat / Balas Pesan */
+    .reply-form {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed #ffd6e0;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .reply-form input,
+    .reply-form textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid #ffd6e0;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      color: #3d2c2e;
+      background: #fffafb;
+      outline: none;
+      user-select: text;
+    }
+
+    .reply-form input:focus,
+    .reply-form textarea:focus {
+      border-color: #ff6b9d;
+      background: #ffffff;
+    }
+
+    .reply-form textarea {
+      resize: vertical;
+      min-height: 75px;
+    }
+
+    .reply-hint {
+      font-size: 0.78rem;
+      color: #8c6d79;
+    }
+
+    .share-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-wa {
+      background: #25d366;
+      color: #fff;
+    }
+
+    .btn-wa:hover {
+      background: #1ebe5d;
+    }
+
+    .copy-status {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #2b9348;
+      background: #eefbf3;
+      padding: 8px 10px;
+      border-radius: 10px;
+      word-break: break-all;
+      user-select: text;
+    }
+
+    /* Area Animasi Momo */
+    #canvas-container {
+      position: relative;
+      width: 380px;
+      max-width: 100%;
+      height: 330px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    canvas {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Kontrol Warna & Ekspresi */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .control-group {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 8px 14px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .color-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .color-btn:hover,
+    .color-btn.active {
+      transform: scale(1.2);
+      border-color: #4a4a4a;
+    }
+
+    .mood-btn {
+      background: #f3f4f6;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #555;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .mood-btn:hover,
+    .mood-btn.active {
+      background: #ff6b9d;
+      color: #ffffff;
+    }
+
+    @media (max-width: 440px) {
+      .form-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-wrapper">
+    <div class="header">
+      <h1>Momo si Monster Bulu</h1>
+      <p class="subtitle">Gerakkan kursor, klik Momo untuk melompat, atau elus tubuhnya!</p>
+    </div>
+
+    <!-- Kartu Pesan & Pembuat Link -->
+    <section class="message-card" aria-label="Pesan spesial">
+      <div class="message-top">
+        <span class="recipient-badge" id="recipientLabel">Untuk: Kamu</span>
+        <div class="card-actions">
+          <button type="button" class="btn-pill" id="openReplyBtn">Buat / Balas Pesan 💌</button>
+          <button type="button" class="btn-pill secondary" id="toggleMsgBtn">Tutup</button>
+        </div>
+      </div>
+
+      <!-- Tampilan Pesan -->
+      <div class="message-body" id="messageBody">
+        <div class="message-title" id="messageTitle">Ada titipan kecil dari Momo ✨</div>
+        <p class="message-text" id="messageText">Terima kasih sudah hadir dan bikin hari-hariku jauh lebih berwarna. Jangan lupa istirahat, minum air, dan jaga diri baik-baik ya!</p>
+        <div class="message-footer" id="messageFooter">— Dari seseorang yang sayang kamu 💖</div>
+      </div>
+
+      <!-- Form Buat Pesan Baru / Balas Pesan -->
+      <form class="reply-form hidden" id="replyForm">
+        <div class="form-row">
+          <input type="text" id="inputRecipient" placeholder="Untuk siapa? (cth: Untuk: Kamu)" maxlength="40" />
+          <input type="text" id="inputSender" placeholder="Dari siapa? (cth: Dari: Aku 💖)" maxlength="40" />
+        </div>
+        <input type="text" id="inputTitle" placeholder="Judul singkat (cth: Titipan pesan dari Momo ✨)" maxlength="60" />
+        <textarea id="inputMessage" placeholder="Tulis pesanmu atau balasanmu di sini..." required></textarea>
+        <p class="reply-hint">Tip: Pilih warna & ekspresi Momo di bagian bawah sebelum membuat link agar ikut tersimpan!</p>
+        <div class="share-row">
+          <button type="submit" class="btn-pill">Buat & Salin Link 🔗</button>
+          <button type="button" class="btn-pill btn-wa" id="sendWaBtn">Kirim ke WhatsApp 💬</button>
+          <button type="button" class="btn-pill secondary" id="cancelReplyBtn">Batal</button>
+        </div>
+        <div class="copy-status hidden" id="copyStatus"></div>
+      </form>
+    </section>
+
+    <div id="canvas-container">
+      <canvas id="monsterCanvas" width="380" height="330"></canvas>
+    </div>
+
+    <div class="controls">
+      <!-- Pilihan Warna -->
+      <div class="control-group" id="color-controls">
+        <button class="color-btn active" style="background: #ff85a1;" data-id="pink" data-body="#ff85a1" data-shadow="#e05778" title="Pink"></button>
+        <button class="color-btn" style="background: #72efdd;" data-id="mint" data-body="#72efdd" data-shadow="#48bfe3" title="Mint"></button>
+        <button class="color-btn" style="background: #b8c0ff;" data-id="lavender" data-body="#b8c0ff" data-shadow="#9381ff" title="Lavender"></button>
+        <button class="color-btn" style="background: #ffd166;" data-id="yellow" data-body="#ffd166" data-shadow="#f4a261" title="Kuning"></button>
+      </div>
+
+      <!-- Pilihan Ekspresi -->
+      <div class="control-group" id="mood-controls">
+        <button class="mood-btn active" data-mood="happy">Senang</button>
+        <button class="mood-btn" data-mood="surprised">Kaget</button>
+        <button class="mood-btn" data-mood="sleepy">Ngantuk</button>
+        <button class="mood-btn" data-mood="love">Gemas</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // KONFIGURASI PESAN DEFAULT & PEMBACAAN PARAMETER URL
+    // =========================================================================
+    const DEFAULT_MESSAGE = {
+      recipient: 'Untuk: Kamu',
+      title: 'Ada titipan kecil dari Momo ✨',
+      body: 'Terima kasih sudah hadir dan bikin hari-hariku jauh lebih berwarna. Jangan lupa istirahat, minum air, dan jaga diri baik-baik ya!',
+      footer: '— Dari seseorang yang sayang kamu 💖',
+      color: 'pink',
+      mood: 'happy'
+    };
+
+    const COLOR_MAP = {
+      pink: { body: '#ff85a1', shadow: '#e05778' },
+      mint: { body: '#72efdd', shadow: '#48bfe3' },
+      lavender: { body: '#b8c0ff', shadow: '#9381ff' },
+      yellow: { body: '#ffd166', shadow: '#f4a261' }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const activeData = {
+      recipient: params.get('to') || DEFAULT_MESSAGE.recipient,
+      title: params.get('title') || (params.has('msg') ? 'Pesan spesial dari Momo 💌' : DEFAULT_MESSAGE.title),
+      body: params.get('msg') || DEFAULT_MESSAGE.body,
+      footer: params.get('from') ? `— ${params.get('from')}` : DEFAULT_MESSAGE.footer,
+      color: COLOR_MAP[params.get('color')] ? params.get('color') : DEFAULT_MESSAGE.color,
+      mood: ['happy', 'surprised', 'sleepy', 'love'].includes(params.get('mood'))
+        ? params.get('mood')
+        : DEFAULT_MESSAGE.mood
+    };
+
+    function renderMessageCard(data) {
+      document.getElementById('recipientLabel').textContent = data.recipient;
+      document.getElementById('messageTitle').textContent = data.title;
+      document.getElementById('messageText').textContent = data.body;
+      document.getElementById('messageFooter').textContent = data.footer;
+    }
+
+    renderMessageCard(activeData);
+
+    // =========================================================================
+    // STATE & INISIALISASI MOMO
+    // =========================================================================
+    const canvas = document.getElementById('monsterCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const state = {
+      x: canvas.width / 2,
+      y: 190,
+      baseY: 190,
+      radius: 84,
+      colorId: activeData.color,
+      bodyColor: COLOR_MAP[activeData.color].body,
+      shadowColor: COLOR_MAP[activeData.color].shadow,
+      mood: activeData.mood,
+      mouseX: canvas.width / 2,
+      mouseY: 190,
+      isHovered: false,
+      jumpVelocity: 0,
+      jumpOffset: 0,
+      squashX: 1,
+      squashY: 1,
+      blinkTimer: 0,
+      isBlinking: false,
+      time: 0,
+      petCooldown: 0
+    };
+
+    document.querySelectorAll('.color-btn').forEach((btn) => {
+      btn.classList.toggle('active', btn.dataset.id === state.colorId);
+    });
+    document.querySelectorAll('.mood-btn').forEach((btn) => {
+      btn.classList.toggle('active', btn.dataset.mood === state.mood);
+    });
+
+    // =========================================================================
+    // KONTROL KARTU PESAN & PEMBUAT LINK
+    // =========================================================================
+    const toggleMsgBtn = document.getElementById('toggleMsgBtn');
+    const openReplyBtn = document.getElementById('openReplyBtn');
+    const cancelReplyBtn = document.getElementById('cancelReplyBtn');
+    const messageBody = document.getElementById('messageBody');
+    const replyForm = document.getElementById('replyForm');
+    const copyStatus = document.getElementById('copyStatus');
+
+    toggleMsgBtn.addEventListener('click', () => {
+      replyForm.classList.add('hidden');
+      const isHidden = messageBody.classList.toggle('hidden');
+      toggleMsgBtn.textContent = isHidden ? 'Buka Pesan' : 'Tutup';
+    });
+
+    openReplyBtn.addEventListener('click', () => {
+      messageBody.classList.add('hidden');
+      replyForm.classList.remove('hidden');
+      toggleMsgBtn.textContent = 'Lihat Pesan';
+      copyStatus.classList.add('hidden');
+      document.getElementById('inputMessage').focus();
+    });
+
+    cancelReplyBtn.addEventListener('click', () => {
+      replyForm.classList.add('hidden');
+      messageBody.classList.remove('hidden');
+      toggleMsgBtn.textContent = 'Tutup';
+    });
+
+    function buildShareableLink() {
+      const toVal = document.getElementById('inputRecipient').value.trim() || 'Untuk: Kamu';
+      const fromVal = document.getElementById('inputSender').value.trim() || 'Dari: Aku 💖';
+      const titleVal = document.getElementById('inputTitle').value.trim() || 'Titipan pesan dari Momo 💌';
+      const msgVal = document.getElementById('inputMessage').value.trim();
+
+      const url = new URL(window.location.href.split('?')[0]);
+      url.searchParams.set('to', toVal);
+      url.searchParams.set('from', fromVal);
+      url.searchParams.set('title', titleVal);
+      url.searchParams.set('msg', msgVal);
+      url.searchParams.set('color', state.colorId);
+      url.searchParams.set('mood', state.mood);
+
+      return { link: url.toString(), toVal, fromVal, titleVal, msgVal };
+    }
+
+    function syncPreviewAndHistory(data) {
+      renderMessageCard({
+        recipient: data.toVal,
+        title: data.titleVal,
+        body: data.msgVal,
+        footer: `— ${data.fromVal}`
+      });
+      if (window.location.protocol.startsWith('http')) {
+        window.history.replaceState({}, '', data.link);
+      }
+    }
+
+    replyForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = buildShareableLink();
+      if (!data.msgVal) return;
+
+      syncPreviewAndHistory(data);
+
+      try {
+        await navigator.clipboard.writeText(data.link);
+        copyStatus.textContent = `✅ Link tersalin! Kirim link ini ke dia:\n${data.link}`;
+      } catch {
+        copyStatus.textContent = `✅ Salin link ini untuk dikirim:\n${data.link}`;
+      }
+      copyStatus.classList.remove('hidden');
+    });
+
+    document.getElementById('sendWaBtn').addEventListener('click', () => {
+      const data = buildShareableLink();
+      if (!data.msgVal) {
+        document.getElementById('inputMessage').focus();
+        return;
+      }
+      syncPreviewAndHistory(data);
+      const waText = encodeURIComponent(`Ada titipan pesan dari Momo si Monster Bulu untukmu 💌:\n${data.link}`);
+      window.open(`https://wa.me/?text=${waText}`, '_blank', 'noopener');
+    });
+
+    // =========================================================================
+    // LOGIKA ANIMASI & INTERAKSI CANVAS
+    // =========================================================================
+    const particles = [];
+
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playSound(type) {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      const now = audioCtx.currentTime;
+      if (type === 'jump') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(280, now);
+        osc.frequency.exponentialRampToValueAtTime(620, now + 0.18);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
+        osc.start(now);
+        osc.stop(now + 0.18);
+      } else if (type === 'pet') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(450 + Math.random() * 150, now);
+        osc.frequency.exponentialRampToValueAtTime(600, now + 0.08);
+        gain.gain.setValueAtTime(0.05, now);
+        gain.gain.exponentialRampToValueAtTime(0.005, now + 0.08);
+        osc.start(now);
+        osc.stop(now + 0.08);
+      }
+    }
+
+    function updatePointer(clientX, clientY) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      state.mouseX = (clientX - rect.left) * scaleX;
+      state.mouseY = (clientY - rect.top) * scaleY;
+
+      const dist = Math.hypot(state.mouseX - state.x, state.mouseY - (state.y + state.jumpOffset));
+      state.isHovered = dist < state.radius;
+
+      if (state.isHovered && state.petCooldown <= 0) {
+        spawnParticle(state.mouseX, state.mouseY, Math.random() > 0.5 ? '❤️' : '✨');
+        playSound('pet');
+        state.petCooldown = 12;
+      }
+    }
+
+    canvas.addEventListener('mousemove', (e) => updatePointer(e.clientX, e.clientY));
+    canvas.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        updatePointer(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }, { passive: true });
+
+    canvas.addEventListener('mouseleave', () => {
+      state.isHovered = false;
+      state.mouseX = canvas.width / 2;
+      state.mouseY = state.baseY;
+    });
+
+    canvas.addEventListener('click', () => {
+      if (state.jumpOffset === 0) {
+        state.jumpVelocity = -13;
+        state.squashX = 0.8;
+        state.squashY = 1.25;
+        playSound('jump');
+        for (let i = 0; i < 6; i++) {
+          spawnParticle(
+            state.x + (Math.random() - 0.5) * 100,
+            state.y - 40,
+            ['⭐', '💖', '🌸'][Math.floor(Math.random() * 3)]
+          );
+        }
+      }
+    });
+
+    document.querySelectorAll('.color-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.color-btn').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.colorId = btn.dataset.id;
+        state.bodyColor = btn.dataset.body;
+        state.shadowColor = btn.dataset.shadow;
+      });
+    });
+
+    document.querySelectorAll('.mood-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.mood-btn').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.mood = btn.dataset.mood;
+      });
+    });
+
+    function spawnParticle(x, y, emoji) {
+      particles.push({
+        x,
+        y,
+        vx: (Math.random() - 0.5) * 2.5,
+        vy: -1.5 - Math.random() * 2,
+        alpha: 1,
+        size: 16 + Math.random() * 8,
+        emoji
+      });
+    }
+
+    function updateParticles() {
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= 0.02;
+        if (p.alpha <= 0) {
+          particles.splice(i, 1);
+        } else {
+          ctx.save();
+          ctx.globalAlpha = p.alpha;
+          ctx.font = `${p.size}px Arial`;
+          ctx.fillText(p.emoji, p.x, p.y);
+          ctx.restore();
+        }
+      }
+    }
+
+    function drawFluffyBody(cx, cy, radius) {
+      const spikes = 36;
+      ctx.beginPath();
+      for (let i = 0; i <= spikes * 2; i++) {
+        const angle = (i * Math.PI) / spikes;
+        const wave = Math.sin(angle * 12 + state.time * 4) * 2.5;
+        const r = i % 2 === 0 ? radius + 6 + wave : radius - 3;
+        const px = cx + Math.cos(angle) * r;
+        const py = cy + Math.sin(angle) * r;
+        if (i === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+
+      const grad = ctx.createRadialGradient(cx - 25, cy - 30, 15, cx, cy, radius + 10);
+      grad.addColorStop(0, '#ffffff');
+      grad.addColorStop(0.25, state.bodyColor);
+      grad.addColorStop(1, state.shadowColor);
+
+      ctx.fillStyle = grad;
+      ctx.fill();
+    }
+
+    function drawAppendages(cx, cy) {
+      ctx.fillStyle = '#ffe5d9';
+      [-1, 1].forEach((dir) => {
+        ctx.beginPath();
+        ctx.moveTo(cx + dir * 37, cy - 64);
+        ctx.quadraticCurveTo(cx + dir * 58, cy - 98, cx + dir * 22, cy - 78);
+        ctx.closePath();
+        ctx.fill();
+      });
+
+      const waveAngle = Math.sin(state.time * 5) * 0.25;
+      [-1, 1].forEach((dir) => {
+        ctx.save();
+        ctx.translate(cx + dir * 78, cy + 10);
+        ctx.rotate(dir * (0.4 + (state.isHovered ? waveAngle * 2 : waveAngle)));
+        ctx.fillStyle = state.shadowColor;
+        ctx.beginPath();
+        ctx.ellipse(dir * 12, 0, 16, 10, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      });
+
+      ctx.fillStyle = state.shadowColor;
+      [-31, 31].forEach((offsetX) => {
+        ctx.beginPath();
+        ctx.ellipse(cx + offsetX, cy + 82, 18, 10, 0, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    function drawFace(cx, cy) {
+      const dx = state.mouseX - cx;
+      const dy = state.mouseY - cy;
+      const angle = Math.atan2(dy, dx);
+      const dist = Math.min(Math.hypot(dx, dy) / 25, 7);
+      const lookX = Math.cos(angle) * dist;
+      const lookY = Math.sin(angle) * dist;
+
+      ctx.fillStyle = 'rgba(255, 105, 135, 0.45)';
+      ctx.beginPath();
+      ctx.ellipse(cx - 42, cy + 12, 13, 7.5, 0, 0, Math.PI * 2);
+      ctx.ellipse(cx + 42, cy + 12, 13, 7.5, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      [-26, 26].forEach((eyeOffsetX) => {
+        const ex = cx + eyeOffsetX;
+        const ey = cy - 12;
+
+        if (state.isBlinking || state.mood === 'sleepy') {
+          ctx.strokeStyle = '#3d2c2e';
+          ctx.lineWidth = 4;
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.arc(ex, ey, 13, 0.1 * Math.PI, 0.9 * Math.PI);
+          ctx.stroke();
+        } else if (state.mood === 'love' || state.isHovered) {
+          ctx.font = '24px Arial';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('💖', ex + lookX * 0.5, ey + lookY * 0.5);
+        } else {
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath();
+          ctx.arc(ex, ey, 16, 0, Math.PI * 2);
+          ctx.fill();
+
+          const pupilRadius = state.mood === 'surprised' ? 6.5 : 9;
+          ctx.fillStyle = '#2b2d42';
+          ctx.beginPath();
+          ctx.arc(ex + lookX, ey + lookY, pupilRadius, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath();
+          ctx.arc(ex + lookX - 3, ey + lookY - 3, 3, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
+
+      ctx.strokeStyle = '#3d2c2e';
+      ctx.fillStyle = '#ff5c8a';
+      ctx.lineWidth = 3.5;
+      ctx.lineCap = 'round';
+
+      if (state.mood === 'happy' || state.mood === 'love') {
+        ctx.beginPath();
+        ctx.arc(cx, cy + 14, 13, 0.1 * Math.PI, 0.9 * Math.PI);
+        ctx.fill();
+        ctx.stroke();
+      } else if (state.mood === 'surprised') {
+        ctx.beginPath();
+        ctx.ellipse(cx, cy + 20, 8.5, 11, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      } else if (state.mood === 'sleepy') {
+        ctx.beginPath();
+        ctx.arc(cx, cy + 22, 5.5, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      state.time += 0.05;
+      if (state.petCooldown > 0) state.petCooldown--;
+
+      if (state.jumpOffset < 0 || state.jumpVelocity !== 0) {
+        state.jumpOffset += state.jumpVelocity;
+        state.jumpVelocity += 0.8;
+
+        if (state.jumpOffset >= 0) {
+          state.jumpOffset = 0;
+          state.jumpVelocity = 0;
+          state.squashX = 1.25;
+          state.squashY = 0.78;
+        }
+      }
+
+      state.squashX += (1 - state.squashX) * 0.15;
+      state.squashY += (1 - state.squashY) * 0.15;
+
+      const breatheX = Math.sin(state.time * 2) * 0.03;
+      const breatheY = Math.cos(state.time * 2) * 0.03;
+
+      state.blinkTimer++;
+      if (state.blinkTimer > 160) {
+        state.isBlinking = true;
+        if (state.blinkTimer > 170) {
+          state.isBlinking = false;
+          state.blinkTimer = 0;
+        }
+      }
+
+      const shadowScale = 1 + state.jumpOffset / 250;
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+      ctx.beginPath();
+      ctx.ellipse(state.x, state.baseY + 88, 66 * shadowScale, 12 * shadowScale, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.save();
+      ctx.translate(state.x, state.y + state.jumpOffset);
+      ctx.scale(state.squashX + breatheX, state.squashY + breatheY);
+
+      drawAppendages(0, 0);
+      drawFluffyBody(0, 0, state.radius);
+      drawFace(0, 0);
+
+      ctx.restore();
+
+      updateParticles();
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
